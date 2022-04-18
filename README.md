@@ -3,7 +3,7 @@ This project is made to create a websocket communication between games made in C
 
 ## How to use
 Very simple, add all the dll which are under `.\bin\Release\net6.0\`,
-aslo install some dependency from NuGet which are : 
+aslo install some dependencies from NuGet which are : 
 - Chance.Net 2.2.0
 - Fleck 1.2.0
 - Newtonsoft.Json 13.0.1
