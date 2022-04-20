@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Fleck;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ObservableWebSocketServerCS
 {
@@ -12,11 +14,13 @@ namespace ObservableWebSocketServerCS
     {
         public List<Tuple<int, string, IWebSocketConnection>> clients = new List<Tuple<int, string, IWebSocketConnection>>();
         static int SocketId = 0;
-        public Server(int port = 8080)
+        public Server(int port = 8080, string serverPfx = "server.pfx")
         {
             var thread = new Thread(new ThreadStart(() =>
             {
-                var server = new WebSocketServer("ws://0.0.0.0:" + port);
+                var server = new WebSocketServer("wss://0.0.0.0:" + port);
+
+                server.Certificate = new X509Certificate2(serverPfx);
                 server.Start(socket =>
                 {
                     socket.OnOpen = () =>
