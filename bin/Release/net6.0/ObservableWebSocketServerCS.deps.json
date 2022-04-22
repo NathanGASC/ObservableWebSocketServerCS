@@ -8,21 +8,12 @@
     ".NETCoreApp,Version=v6.0": {
       "ObservableWebSocketServerCS/1.0.0": {
         "dependencies": {
-          "Chance.NET": "2.2.0",
           "Fleck": "1.2.0",
           "Newtonsoft.Json": "13.0.1",
           "observer": "1.0.0.0"
         },
         "runtime": {
           "ObservableWebSocketServerCS.dll": {}
-        }
-      },
-      "Chance.NET/2.2.0": {
-        "runtime": {
-          "lib/netcoreapp2.0/Chance.NET.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.0"
-          }
         }
       },
       "Fleck/1.2.0": {
@@ -56,13 +47,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "Chance.NET/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-U2vM9/nKCfyE8aVI9w8iPfK1T22jf1pPF2az7Bmi/43APs7u16VLiGpG8o7WMvtX8nUgEhiVNWMdqeIT+RgWGQ==",
-      "path": "chance.net/2.2.0",
-      "hashPath": "chance.net.2.2.0.nupkg.sha512"
     },
     "Fleck/1.2.0": {
       "type": "package",

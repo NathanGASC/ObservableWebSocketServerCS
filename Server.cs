@@ -12,43 +12,40 @@ namespace ObservableWebSocketServerCS
 {
     public class Server : Observer.Observable
     {
-        public List<Tuple<int, string, IWebSocketConnection>> clients = new List<Tuple<int, string, IWebSocketConnection>>();
+        public List<Tuple<int, IWebSocketConnection>> clients = new List<Tuple<int, IWebSocketConnection>>();
         static int SocketId = 0;
-        public Server(int port = 8080, string serverPfx = "server.pfx")
+        public Server(int port = 8080)
         {
             var thread = new Thread(new ThreadStart(() =>
             {
-                var server = new WebSocketServer("wss://0.0.0.0:" + port);
-
-                server.Certificate = new X509Certificate2(serverPfx);
+                var server = new WebSocketServer("ws://0.0.0.0:" + port);
                 server.Start(socket =>
                 {
                     socket.OnOpen = () =>
                     {
                         var id = Server.SocketId++;
-                        var name = (new ChanceNET.Chance()).Person().FullName();
-                        this.clients.Add(new Tuple<int, string, IWebSocketConnection>(id, name, socket));
-                        var data = new Object[] { id,name,socket };
+                        this.clients.Add(new Tuple<int, IWebSocketConnection>(id, socket));
+                        var data = new Object[] { id,socket };
                         this.Notify("Open", data);
                     };
                     socket.OnClose = () =>
                     {
                         var item = this.clients.Find((item) =>
                         {
-                            if (item.Item3 == socket) return true;
+                            if (item.Item2 == socket) return true;
                             return false;
                         });
-                        var data = new Object[] { item.Item1, item.Item2, socket };
+                        var data = new Object[] { item.Item1, item.Item2 };
                         this.Notify("Close", data);
                     };
                     socket.OnMessage = message =>
                     {
                         var item = this.clients.Find((item) =>
                         {
-                            if (item.Item3 == socket) return true;
+                            if (item.Item2 == socket) return true;
                             return false;
                         });
-                        var data = new Object[] { item.Item1, item.Item2, socket, message };
+                        var data = new Object[] { item.Item1, socket, message };
                         this.Notify("Message", data);
                         try
                         {
@@ -99,10 +96,10 @@ namespace ObservableWebSocketServerCS
             _data["data"] = _json;
 
             var client = this.getClientFromId(id);
-            client.Item3.Send(_data.ToString());
+            client.Item2.Send(_data.ToString());
         }
 
-        public Tuple<int, string, IWebSocketConnection> getClientFromId(int id)
+        public Tuple<int, IWebSocketConnection> getClientFromId(int id)
         {
             var tuple = this.clients.Find(item =>
             {

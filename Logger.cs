@@ -10,19 +10,19 @@ namespace ObservableWebSocketServerCS
 {
     public class Logger : Observer.Observer
     {
-        public void OnOpen(int id, string name, IWebSocketConnection socket)
+        public void OnOpen(int id, IWebSocketConnection socket)
         {
-            Console.WriteLine(DateTime.Now + ": +" + name + "#" + id);
+            Console.WriteLine(DateTime.Now + ": + @" + id);
         }
 
-        public void OnClose(int id, string name, IWebSocketConnection socket)
+        public void OnClose(int id, IWebSocketConnection socket)
         {
-            Console.WriteLine(DateTime.Now + ": -" + name + "#" + id);
+            Console.WriteLine(DateTime.Now + ": - @" + id);
         }
 
-        public void OnMessage(int id, string name, IWebSocketConnection socket, string message)
+        public void OnMessage(int id, IWebSocketConnection socket, string message)
         {
-            Console.WriteLine(DateTime.Now + ": <>" + name + "#" + id + " : \r\n" + JObject.Parse(message));
+            Console.WriteLine(DateTime.Now + ": <> @" + id + " : \r\n" + JObject.Parse(message));
         }
     }
 }
